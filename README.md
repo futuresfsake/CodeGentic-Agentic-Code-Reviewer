@@ -28,6 +28,26 @@ Study notes and runnable examples from Module 2 of my Claude Developer Certifica
 | [`notes/07_structured_outputs.md`](notes/07_structured_outputs.md) | `07_structured_outputs.py` | Two methods (`output_config.format` and `strict: true`), `messages.parse()`, when to use which |
 | [`notes/08_error_handling.md`](notes/08_error_handling.md) | `08_error_handling.py` | SDK auto-retry, exception hierarchy, common 400 errors, custom retry, timeouts |
 
+## Real Project: Code Review Agent
+
+[`code_review_agent.py`](code_review_agent.py) — A working agent that ties **every Module 2 concept** together:
+
+| Concept | How it's used |
+|---------|---------------|
+| Extended Thinking | Adaptive thinking for deep code analysis |
+| Tool Use | `list_files`, `read_file`, `search_pattern` tools with the agent loop |
+| Tool Schema Design | Well-defined schemas with descriptions |
+| Streaming | Real-time streamed output during review |
+| Production Agent | `while` loop with max iterations and error tracking |
+| Prompt Caching | System prompt + tools cached across all loop iterations |
+| Structured Outputs | Final review returned as validated JSON via `output_config.format` |
+| Error Handling | Specific exception chain, retry logic, consecutive error limits |
+
+```bash
+python code_review_agent.py my_script.py     # review a single file
+python code_review_agent.py src/              # review a directory
+```
+
 ## Running the examples
 
 ```bash
