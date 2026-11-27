@@ -34,30 +34,27 @@ def structured_sentiment():
         output_config={
             "format": {
                 "type": "json_schema",
-                "json_schema": {
-                    "name": "sentiment_analysis",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "sentiment": {
-                                "type": "string",
-                                "enum": ["positive", "negative", "neutral", "mixed"]
-                            },
-                            "confidence": {
-                                "type": "number",
-                                "description": "0.0 to 1.0"
-                            },
-                            "key_phrases": {
-                                "type": "array",
-                                "items": {"type": "string"}
-                            },
-                            "summary": {
-                                "type": "string"
-                            }
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "sentiment": {
+                            "type": "string",
+                            "enum": ["positive", "negative", "neutral", "mixed"]
                         },
-                        "required": ["sentiment", "confidence", "key_phrases", "summary"],
-                        "additionalProperties": False
-                    }
+                        "confidence": {
+                            "type": "number",
+                            "description": "0.0 to 1.0"
+                        },
+                        "key_phrases": {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        },
+                        "summary": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["sentiment", "confidence", "key_phrases", "summary"],
+                    "additionalProperties": False
                 }
             }
         },
@@ -84,20 +81,17 @@ def extract_entities():
         output_config={
             "format": {
                 "type": "json_schema",
-                "json_schema": {
-                    "name": "contact_info",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {"type": "string"},
-                            "email": {"type": "string"},
-                            "phone": {"type": "string"},
-                            "company": {"type": "string"},
-                            "role": {"type": "string"}
-                        },
-                        "required": ["name", "email", "phone", "company", "role"],
-                        "additionalProperties": False
-                    }
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"},
+                        "email": {"type": "string"},
+                        "phone": {"type": "string"},
+                        "company": {"type": "string"},
+                        "role": {"type": "string"}
+                    },
+                    "required": ["name", "email", "phone", "company", "role"],
+                    "additionalProperties": False
                 }
             }
         },
@@ -179,35 +173,32 @@ def structured_code_review():
         output_config={
             "format": {
                 "type": "json_schema",
-                "json_schema": {
-                    "name": "code_review",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "overall_quality": {
-                                "type": "string",
-                                "enum": ["excellent", "good", "needs_improvement", "poor"]
-                            },
-                            "findings": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "severity": {"type": "string", "enum": ["critical", "warning", "info"]},
-                                        "category": {"type": "string", "enum": ["bug", "security", "performance", "style", "maintainability"]},
-                                        "line": {"type": "integer"},
-                                        "description": {"type": "string"},
-                                        "suggestion": {"type": "string"}
-                                    },
-                                    "required": ["severity", "category", "line", "description", "suggestion"],
-                                    "additionalProperties": False
-                                }
-                            },
-                            "summary": {"type": "string"}
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "overall_quality": {
+                            "type": "string",
+                            "enum": ["excellent", "good", "needs_improvement", "poor"]
                         },
-                        "required": ["overall_quality", "findings", "summary"],
-                        "additionalProperties": False
-                    }
+                        "findings": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "severity": {"type": "string", "enum": ["critical", "warning", "info"]},
+                                    "category": {"type": "string", "enum": ["bug", "security", "performance", "style", "maintainability"]},
+                                    "line": {"type": "integer"},
+                                    "description": {"type": "string"},
+                                    "suggestion": {"type": "string"}
+                                },
+                                "required": ["severity", "category", "line", "description", "suggestion"],
+                                "additionalProperties": False
+                            }
+                        },
+                        "summary": {"type": "string"}
+                    },
+                    "required": ["overall_quality", "findings", "summary"],
+                    "additionalProperties": False
                 }
             }
         },
