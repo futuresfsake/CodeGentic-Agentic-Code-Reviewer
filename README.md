@@ -1,11 +1,15 @@
-# Claude Developer Certification – Module 2 Practice
+# CodeGentic – Agentic Code Reviewer
 
-Study notes and runnable examples from Module 2 of my Claude Developer Certification preparation. The focus is on how the Claude API works under the hood: extended thinking, tool use, and how those pieces combine into an agent.
+[![CI](https://github.com/futuresfsake/CodeGentic-Agentic-Code-Reviewer/actions/workflows/ci.yml/badge.svg)](https://github.com/futuresfsake/CodeGentic-Agentic-Code-Reviewer/actions/workflows/ci.yml)
+
+A code review agent built on the Claude API, with the study notes and examples it grew out of.
+
+The material comes from Module 2 of my Claude Developer Certification preparation. The focus is on how the Claude API works under the hood: extended thinking, tool use, and how those pieces combine into an agent.
 
 ## Project Structure
 
 ```
-Module2Practice/
+CodeGentic-Agentic-Code-Reviewer/
 ├── examples/          # Numbered concept implementations
 │   ├── 01_extended_thinking.py
 │   ├── 02_tool_use.py
@@ -25,7 +29,11 @@ Module2Practice/
 │   ├── 07_structured_outputs.md
 │   └── 08_error_handling.md
 ├── project/           # Real project tying everything together
-│   └── code_review_agent.py
+│   ├── code_review_agent.py   # Agent loop, structured review, CLI
+│   ├── review_tools.py        # File tools, limited to the review target
+│   ├── review_schema.py       # JSON schema for the review
+│   └── review_report.py       # Terminal output
+├── tests/             # Offline tests (no API key needed)
 └── README.md
 ```
 
@@ -65,20 +73,33 @@ Module2Practice/
 | Tool Use | `list_files`, `read_file`, `search_pattern` tools with the agent loop |
 | Tool Schema Design | Well-defined schemas with descriptions |
 | Streaming | Real-time streamed output during review |
-| Production Agent | `while` loop with max iterations and error tracking |
+| Production Agent | Agent loop with an iteration cap and stop-reason handling |
 | Prompt Caching | System prompt + tools cached across all loop iterations |
 | Structured Outputs | Final review returned as validated JSON via `output_config.format` |
-| Error Handling | Specific exception chain, retry logic, consecutive error limits |
+| Error Handling | Typed API errors, bounded retries that honour `retry-after` |
 
 ```bash
+pip install -r requirements.txt
 python project/code_review_agent.py my_script.py     # review a single file
 python project/code_review_agent.py src/              # review a directory
+```
+
+The findings are printed and saved to `review_output.json`.
+
+The agent can only read inside the file or directory you point it at: paths and glob patterns that resolve outside it are refused. Everything it reads is sent to the Claude API, so don't point it at folders that hold secrets.
+
+## Development
+
+```bash
+pip install -r requirements-dev.txt
+ruff check project tests
+pytest
 ```
 
 ## Running the examples
 
 ```bash
-pip install anthropic
+pip install -r requirements.txt
 export ANTHROPIC_API_KEY="your-key-here"   # PowerShell: $env:ANTHROPIC_API_KEY="your-key-here"
 python examples/01_extended_thinking.py
 python examples/02_tool_use.py
