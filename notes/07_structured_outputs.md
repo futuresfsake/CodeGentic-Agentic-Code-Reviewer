@@ -27,18 +27,15 @@ response = client.messages.create(
     output_config={
         "format": {
             "type": "json_schema",
-            "json_schema": {
-                "name": "analysis_result",
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "sentiment": {"type": "string", "enum": ["positive", "negative", "neutral"]},
-                        "confidence": {"type": "number"},
-                        "key_phrases": {"type": "array", "items": {"type": "string"}}
-                    },
-                    "required": ["sentiment", "confidence", "key_phrases"],
-                    "additionalProperties": False
-                }
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "sentiment": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+                    "confidence": {"type": "number"},
+                    "key_phrases": {"type": "array", "items": {"type": "string"}}
+                },
+                "required": ["sentiment", "confidence", "key_phrases"],
+                "additionalProperties": False
             }
         }
     },
@@ -87,7 +84,7 @@ The SDK's `parse()` method validates the response against your schema automatica
 response = client.messages.parse(
     model="claude-opus-5-5",
     max_tokens=4096,
-    output_config={"format": {"type": "json_schema", "json_schema": {...}}},
+    output_config={"format": {"type": "json_schema", "schema": {...}}},
     messages=[...]
 )
 ```
